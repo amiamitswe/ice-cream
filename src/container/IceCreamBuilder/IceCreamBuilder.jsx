@@ -8,6 +8,7 @@ class IceCreamBuilder extends Component {
     items: {},
     scoops: [],
     totalPrice: 0,
+    display: "none"
   };
 
   componentDidMount = () => {
@@ -39,7 +40,6 @@ class IceCreamBuilder extends Component {
     const workingScoops = [...scoops];
 
     const scoopIndex = workingScoops.findIndex((sc) => sc === scoop);
-
     workingScoops.splice(scoopIndex, 1);
 
     this.setState((prevState) => {
@@ -50,8 +50,18 @@ class IceCreamBuilder extends Component {
     });
   };
 
+
+  modalOpenHandler = (price) => {
+    this.setState({display: "block"})
+  }
+
+  closeModalHandler = () => {
+    this.setState({display: "none"})
+  }
+  
+
   render() {
-    const { items, scoops, totalPrice } = this.state;
+    const { items, scoops, totalPrice, display } = this.state;
 
     return (
       <div className={[classes.container, "container"].join(" ")}>
@@ -62,6 +72,9 @@ class IceCreamBuilder extends Component {
           addScoop={this.addScoopHandler}
           removeScoop={this.removeScoopHandler}
           scoops={scoops}
+          modalOpenHandler={this.modalOpenHandler}
+          closeModal = {this.closeModalHandler}
+          display={display}
         />
       </div>
     );
